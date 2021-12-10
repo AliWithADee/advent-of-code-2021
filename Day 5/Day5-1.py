@@ -1,6 +1,3 @@
-from os import read
-
-
 def read_input(path):
     segments = []
     with open(path, "r") as file:
