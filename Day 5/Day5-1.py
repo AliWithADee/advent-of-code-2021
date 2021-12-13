@@ -25,47 +25,37 @@ def read_input(path):
             if (y2 - y1) < 0: step = -1
             for y in range(y1, y2 + step, step):
                 points.append([x1, y])
-            lines.append(points)
         elif y1 == y2:
             step = 1
             if (x2 - x1) < 0: step = -1
             for x in range(x1, x2 + step, step):
                 points.append([x, y1])
-            lines.append(points)
+        
+        lines.append(points)
 
     return lines
 
-def write_points(lines):
-    with open("points.txt", "w") as file:
-        for line in lines:
-            for point in line:
-                file.write("{},{};".format(point[0], point[1]))
-            file.write("\n")
+grid = []
+for r in range(1000):
+    row = []
+    for c in range(1000):
+        row.append(0)
+    grid.append(row)
 
-lines = read_input("day 5.txt")
-#write_points(lines)
+lines = read_input("Day 5/day 5.txt")
 
-# cnt = 0
-# for line in lines:
-#     for point in line:
-#         cnt += 1
-# print(cnt)
-# print(cnt**2)
+for line in lines:
+    for point in line:
+        x = point[0]
+        y = point[1]
+        grid[y][x] += 1
 
-overlap_count = 0
-for l in range(len(lines)):
-    line = lines[l]
-    for p in range(len(line)):
-        point = line[p]
-        point_count = 1
-        
-        for i in range(len(lines)):
-            if i != l:
-                other_line = lines[i]
-                if point in other_line:
-                    point_count += 1
+count = 0
+for row in grid:
+    row_count = 0
+    for n in row:
+        if n >= 2:
+            row_count += 1
+    count += row_count
 
-        if point_count >= 2:
-            overlap_count += 1
-
-print(overlap_count)
+print(count)
