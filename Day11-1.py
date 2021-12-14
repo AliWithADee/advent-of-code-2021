@@ -64,14 +64,21 @@ for step in range(1):
             # If > 9
             if energy > 9:
 
-                my_neighbours = get_neighbours(r, c)
-                for n in my_neighbours:
-                    octos[n[0]][n[1]]
+                neighbours = get_neighbours(r, c)
+                for n in neighbours:
+                    octos[n[0]][n[1]] += 1
                         
-                print("Flash {}".format([r, c]))
-                for row in octos:
-                    print(row)
-                print()
-                
-                
-    
+                new_neighbours = neighbours
+
+                while new_neighbours != []:
+                    new_neighbours = []
+                    for n in neighbours:
+                        if octos[n[0]][n[1]] > 9:
+                            new_neighbours.append(get_neighbours(n[0], n[1]))
+                    
+                    for n in new_neighbours:
+                        octos[n[0]][n[1]] += 1
+                    
+                    neighbours = new_neighbours
+                    
+                    
