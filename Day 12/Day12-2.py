@@ -30,6 +30,12 @@ def read_input(file_path):
 def move(route):
     global routes
 
+    # Determin if we have visited a small cave twice
+    visited_small_twice = False
+    for cave in route:
+        if (cave.lower() == cave) and route.count(cave) == 2:
+            visited_small_twice = True
+
     # If we are not at the end, continue
     if route[-1] != "end":
 
@@ -42,7 +48,8 @@ def move(route):
 
             # If this is a big cave, then we can move to it
             # If this is a small cave and we have not visited it yet, then we can move to it
-            if (next_cave.upper() == next_cave) or (next_cave not in route):
+            # If this is a small cave, we can only move to it twice if we haven't already visited a small cave twice
+            if (next_cave.upper() == next_cave) or (next_cave not in route) or (route.count(next_cave) < 2 and not visited_small_twice):
 
                 # Add the cave to the route
                 route.append(next_cave)
@@ -57,9 +64,9 @@ def move(route):
         # Once we have checked all our neighbours this function returns
 
         # After all functions return, the inital function returns and we print our result
-    
     else:
-        # If this route has ended, then we have found a new route
+
+        # If this route has ended, then we have found a new route,
         # so increment our counter
         routes += 1
 
